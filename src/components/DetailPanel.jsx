@@ -24,7 +24,7 @@ export default function DetailPanel({ site: s, onBack }) {
       )}
 
       <header>
-        <StatusTag status={s.staus} />
+        <StatusTag status={s.status} />
         <h2>{s.name}</h2>
         <p className="fpe-muted">{siteLocation(s)}</p>
       </header>

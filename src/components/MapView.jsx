@@ -32,12 +32,12 @@ function popupContent(site, onOpen) {
   root.appendChild(el('div', 'fpe-popup__sub', siteLocation(site)));
 
   const meta = el('div', 'fpe-popup__meta');
-  const tag = el('span', 'fpe-tag', statusLabel(site.status));
+  const tag = el('span', 'fpe-tag fpe-tag-status', statusLabel(site.status));
   tag.style.setProperty('--tag', statusColor(site.status));
   meta.appendChild(tag);
   (site.themes ?? [])
     .slice(0, 2)
-    .forEach((t) => meta.appendChild(el('span', null, themeLabel(t))));
+    .forEach((t) => meta.appendChild(el('span', 'fpe-tag', themeLabel(t))));
   root.appendChild(meta);
 
   if (site.summary) {

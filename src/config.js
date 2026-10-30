@@ -17,8 +17,8 @@ export const mapDefaults = {
 export const status = [
   { key: 'ongoing', label: 'Ongoing', color: '#118391' },
   { key: 'new', label: 'New', color: '#7f9c1c' },
-  { key: 'closed', label: 'Closed', color: '#05454e' },
-  { key: 'planned', label: 'To be opened', color: '#da6a37' },
+  { key: 'closed', label: 'Closed', color: '#697070' },
+  { key: 'planned', label: 'To be opened', color: '#b3e218' },
 ];
 export const statusColor = (key) =>
   status.find((s) => s.key === key)?.color ?? '#118391';

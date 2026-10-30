@@ -98,7 +98,6 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
 
   const matching = useMemo(() => {
     const q = filters.query.trim().toLowerCase();
-    
 
     return pins.filter((s) => {
       if (filters.status !== 'all' && s.status !== filters.status) return false;
@@ -124,7 +123,12 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
   const listItems = useMemo(() => {
     const sorted = [...(filters.onlyOnMap ? onMap : matching)];
     const byName = (a, b) => a.name.localeCompare(b.name, 'en');
-    const byStatus = (a, b) => a.status.localeCompare(b.status, 'en');
+
+    const statusOrder = ['planned', 'new', 'ongoing', 'closed'];
+
+    const byStatus = (a, b) =>
+      statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+
     if (filters.sort === 'status') {
       sorted.sort(byStatus);
     } else if (filters.sort === 'newest') {

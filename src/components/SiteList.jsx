@@ -11,7 +11,10 @@ import { siteLocation } from '../utilities';
 
 export function StatusTag({ status }) {
   return (
-    <span className="fpe-tag" style={{ '--tag': statusColor(status) }}>
+    <span
+      className="fpe-tag fpe-tag-status"
+      style={{ '--tag': statusColor(status) }}
+    >
       {statusLabel(status)}
     </span>
   );
@@ -128,7 +131,9 @@ export default function SiteList({
                   <span className="fpe-card__meta">
                     <StatusTag status={s.status} />
                     {s.themes?.slice(0, 2).map((t) => (
-                      <span key={t}>{themeLabel(t)}</span>
+                      <span className="fpe-tag" key={t}>
+                        {themeLabel(t)}
+                      </span>
                     ))}
                     {s.demo && <span className="fpe-demo-badge">Demo</span>}
                   </span>
