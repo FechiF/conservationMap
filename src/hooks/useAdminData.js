@@ -80,7 +80,13 @@ export function useAdminData(url) {
         if (!cancelled) setState({ status: 'ready', error: null, ...built });
       } catch (err) {
         if (!cancelled) {
-          setState({ status: 'error', regions: [], byPcode: {}, byProvince: {}, error: err.message });
+          setState({
+            status: 'error',
+            regions: [],
+            byPcode: {},
+            byProvince: {},
+            error: err.message,
+          });
         }
       }
     })();

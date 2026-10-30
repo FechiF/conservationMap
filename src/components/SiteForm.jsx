@@ -18,11 +18,11 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
 
   const provinces = useMemo(
     () => regions.find((r) => r.pcode === form.regionPcode)?.provinces ?? [],
-    [regions, form.regionPcode]
+    [regions, form.regionPcode],
   );
   const lgus = useMemo(
     () => provinces.find((p) => p.pcode === form.provincePcode)?.lgus ?? [],
-    [provinces, form.provincePcode]
+    [provinces, form.provincePcode],
   );
 
   const set = (patch) => setForm((f) => ({ ...f, ...patch }));
@@ -42,7 +42,9 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
   }
   function toggleTheme(key) {
     set({
-      themes: form.themes.includes(key) ? form.themes.filter((k) => k !== key) : [...form.themes, key],
+      themes: form.themes.includes(key)
+        ? form.themes.filter((k) => k !== key)
+        : [...form.themes, key],
     });
   }
 
@@ -53,7 +55,8 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
     if (!form.provincePcode) e.provincePcode = 'Choose a province.';
     if (!form.lguPcode) e.lguPcode = 'Choose a city or municipality.';
     if (!form.summary.trim()) e.summary = 'Add a short description.';
-    if (form.url.trim() && !safeUrl(form.url.trim())) e.url = 'Enter a full link starting with https://';
+    if (form.url.trim() && !safeUrl(form.url.trim()))
+      e.url = 'Enter a full link starting with https://';
     return e;
   }
 
@@ -73,13 +76,18 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
     setErrors({});
   }
 
-  const err = (k) => errors[k] && <p className="fpe-error" role="alert">{errors[k]}</p>;
+  const err = (k) =>
+    errors[k] && (
+      <p className="fpe-error" role="alert">
+        {errors[k]}
+      </p>
+    );
 
   return (
     <form className="fpe-form" onSubmit={handleSubmit} noValidate>
       <p className="fpe-note">
-        <strong>Demo form.</strong> Entries added here appear on the map for you only and stay in
-        this browser. They are not sent to FPE.
+        <strong>Demo form.</strong> Entries added here appear on the map for you
+        only and stay in this browser. They are not sent to FPE.
       </p>
 
       <div className="fpe-field">
@@ -97,10 +105,16 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
 
       <div className="fpe-field">
         <label htmlFor="fpe-region">Region</label>
-        <select id="fpe-region" value={form.regionPcode} onChange={(e) => changeRegion(e.target.value)}>
+        <select
+          id="fpe-region"
+          value={form.regionPcode}
+          onChange={(e) => changeRegion(e.target.value)}
+        >
           <option value="">Select region…</option>
           {regions.map((r) => (
-            <option key={r.pcode} value={r.pcode}>{r.name}</option>
+            <option key={r.pcode} value={r.pcode}>
+              {r.name}
+            </option>
           ))}
         </select>
         {err('regionPcode')}
@@ -116,7 +130,9 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
         >
           <option value="">Select province…</option>
           {provinces.map((p) => (
-            <option key={p.pcode} value={p.pcode}>{p.name}</option>
+            <option key={p.pcode} value={p.pcode}>
+              {p.name}
+            </option>
           ))}
         </select>
         {err('provincePcode')}
@@ -132,14 +148,18 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
         >
           <option value="">Select city or municipality…</option>
           {lgus.map((l) => (
-            <option key={l.pcode} value={l.pcode}>{l.name}</option>
+            <option key={l.pcode} value={l.pcode}>
+              {l.name}
+            </option>
           ))}
         </select>
         {err('lguPcode')}
       </div>
 
       <fieldset className="fpe-field">
-        <legend>Habitat type <span className="fpe-muted">(optional)</span></legend>
+        <legend>
+          Habitat type <span className="fpe-muted">(optional)</span>
+        </legend>
         {themeOptions.map((t) => (
           <label key={t.key} className="fpe-check">
             <input
@@ -164,7 +184,9 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
       </div>
 
       <div className="fpe-field">
-        <label htmlFor="fpe-url">Link <span className="fpe-muted">(optional)</span></label>
+        <label htmlFor="fpe-url">
+          Link <span className="fpe-muted">(optional)</span>
+        </label>
         <input
           id="fpe-url"
           type="text"
@@ -177,7 +199,9 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
       </div>
 
       <div className="fpe-actions">
-        <button type="submit" className="fpe-btn fpe-btn--primary">Add to map</button>
+        <button type="submit" className="fpe-btn fpe-btn--accent">
+          Add to map
+        </button>
         <button
           type="button"
           className="fpe-btn"

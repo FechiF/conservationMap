@@ -82,7 +82,10 @@ export function unionBBox(boxes) {
 
 export function meanCenter(points) {
   const n = points.length;
-  return [points.reduce((a, p) => a + p[0], 0) / n, points.reduce((a, p) => a + p[1], 0) / n];
+  return [
+    points.reduce((a, p) => a + p[0], 0) / n,
+    points.reduce((a, p) => a + p[1], 0) / n,
+  ];
 }
 
 // ---- misc ------------------------------------------------------------------
@@ -117,7 +120,9 @@ export function siteLocation(s) {
 export function safeUrl(u) {
   try {
     const url = new URL(u);
-    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null;
+    return url.protocol === 'http:' || url.protocol === 'https:'
+      ? url.href
+      : null;
   } catch {
     return null;
   }

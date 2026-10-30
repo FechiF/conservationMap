@@ -3,15 +3,9 @@
     "id": "banao-watershed-kalinga",
     "name": "Banao Watershed, Kalinga",
     "locationText": "Abra and Kalinga",
-    "themes": [
-      "forest",
-      "watershed",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH1403201",
-      "PH1400115"
-    ],
+    "status": "ongoing",
+    "themes": ["forest", "watershed", "ip"],
+    "lguPcodes": ["PH1403201", "PH1400115"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/bcd366fe0260bdde750e4c71e04e02f0.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/banao-watershed-kalinga",
     "summary": "The Balbalasang-Balbalan National Park and Banao watershed area in the Northern Cordillera is proof positive of the inherent capacity of indigenous communities in natural resource protection and management. Through the Banao tribe’s “lapat” tradition, the area continues to maintain one of the most extensive tracts of old growth forest in the country."
@@ -20,14 +14,9 @@
     "id": "biak-na-bato-national-park",
     "name": "Biak-na-Bato National Park",
     "locationText": "Bulacan",
-    "themes": [
-      "forest"
-    ],
-    "lguPcodes": [
-      "PH0301421",
-      "PH0301419",
-      "PH0301424"
-    ],
+    "status": "closed",
+    "themes": ["forest"],
+    "lguPcodes": ["PH0301421", "PH0301419", "PH0301424"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/9fc7e8a628a339331140627260097028.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/biak-na-bato-national-park",
     "summary": "Capacity-building initiatives in the biodiversity-rich limestone forest of Biak-na-Bato National Park have transformed natural resource extractors into vigilant stewards, giving this conservation site a fighting chance against the damage caused by marble quarrying, illegal logging and charcoal-making processes, and encroachment by illegal settlers."
@@ -36,13 +25,9 @@
     "id": "bolos-point-cagayan",
     "name": "Bolos Point, Cagayan",
     "locationText": "Cagayan",
-    "themes": [
-      "forest",
-      "coastal"
-    ],
-    "lguPcodes": [
-      "PH0201514"
-    ],
+    "status": "closed",
+    "themes": ["forest", "coastal"],
+    "lguPcodes": ["PH0201514"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/ab68f0fc88dc46581adae053249d257b.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/bolos-point-cagayan",
     "summary": "Belonging to the Cagayan corridor of the Sierra Madre range, Bolos Point is a pocket of biodiversity in the Pacific seaboard. Its remoteness and considerable inaccessibility makes it vulnerable to rampant logging and illegal fishing activities. Conservation and protection through community-based capacity-building have therefore been pursued in this site."
@@ -51,15 +36,9 @@
     "id": "buasao-watershed-abra",
     "name": "Buasao Watershed, Abra",
     "locationText": "Abra",
-    "themes": [
-      "watershed",
-      "forest",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH1400126",
-      "PH1400102"
-    ],
+    "status": "closed",
+    "themes": ["watershed", "forest", "ip"],
+    "lguPcodes": ["PH1400126", "PH1400102"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/93c70aea0da40ac49068a537c9c47008.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/buasao-watershed-abra",
     "summary": "Threatened by a growing population, increasingly influenced by cosmopolitan culture and a cash economy, the traditional “lapat” system of natural resource management is in danger of disintegration. By reinforcing CBRM in the Buasao Watershed and Mount Poswey, however, FPE has helped re-establish the value of this ages-old beliefs and practices system."
@@ -68,15 +47,9 @@
     "id": "mt-banahaw-san-cristobal",
     "name": "Mt. Banahaw-San Cristobal Protected Landscape, Laguna/Quezon",
     "locationText": "Quezon",
-    "themes": [
-      "forest"
-    ],
-    "lguPcodes": [
-      "PH0405615",
-      "PH0405647",
-      "PH0405623",
-      "PH0405645"
-    ],
+    "status": "closed",
+    "themes": ["forest"],
+    "lguPcodes": ["PH0405615", "PH0405647", "PH0405623", "PH0405645"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/c87894f5f298d2df7f9c8987184db9ba.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/mt.-banahaw-san-cristobal-protected-landscape-lagunaquezon",
     "summary": "The “meeting point” of the northern and southern Luzon sub-faunal regions, the MBSCPL consists of four adjoining mountains, which is home to the remaining forest of Southern Luzon. The establishment and empowerment of an environmental constituency among the surrounding communities has helped build a social fence against threats to the area’s BCSD."
@@ -85,10 +58,8 @@
     "id": "mt-bulusan-volcano-national-park",
     "name": "Mt. Bulusan Volcano National Park, Sorsogon",
     "locationText": "Mt. Bulusan, Sorsogon",
-    "themes": [
-      "forest",
-      "watershed"
-    ],
+    "status": "closed",
+    "themes": ["forest", "watershed"],
     "lguPcodes": [
       "PH0506204",
       "PH0506209",
@@ -104,14 +75,9 @@
     "id": "mt-kalbario-patapat",
     "name": "Mt. Kalbario-Patapat, Ilocos Norte",
     "locationText": "Pagudpud and Adams, Ilocos Norte",
-    "themes": [
-      "forest",
-      "watershed"
-    ],
-    "lguPcodes": [
-      "PH0102815",
-      "PH0102801"
-    ],
+    "status": "new",
+    "themes": ["forest", "watershed"],
+    "lguPcodes": ["PH0102815", "PH0102801"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/e877c1e279b41b3a29a17881a2b6a4ff.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/mt.-kalbario-patapat-ilocos-norte",
     "summary": "Established in April 2009, this 3,800-hectare national park is a protected area located on the Patapat mountains, within the municipalities of Pagudpud and Adams, Ilocos Norte. A notable man-made attraction found here is the Patapat Viaduct in Pagudpud, an elevated bridge that winds around the mountainside to facilitate vehicular travel minus the dangers of landslides. It also offers a great view of Pasaleng Bay.\n\nHome to springs, waterfalls, and closed canopy mountain forests, and streams that lead to Pasaleng Bay, Kalbario Patapat Natural Park is listed as IUCN (International Union for the Conservation of Nature and Natural Resources) Category III (Natural Monument)."
@@ -120,16 +86,9 @@
     "id": "sibuyan-island-romblon",
     "name": "Sibuyan Island, Romblon",
     "locationText": "Romblon",
-    "themes": [
-      "island",
-      "forest",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH1705913",
-      "PH1705903",
-      "PH1705908"
-    ],
+    "status": "new",
+    "themes": ["island", "forest", "ip"],
+    "lguPcodes": ["PH1705913", "PH1705903", "PH1705908"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/658788eb06063a4dc71589971e7dc67f.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/sibuyan-island-romblon",
     "summary": "Sibuyan is one of the remaining bastions of biodiversity in the country. Dubbed the \"Galapagos of Asia\", it has high number of endemic species recorded, with approximately 77% of the species found in the area. The island's famous landmark, Mt. Guiting-Guiting, was proclaimed a natural park in 1996. Despite its protected status, there are serious threats to the biodiversity of Mt. Guiting-Guiting and other areas of the island. Though its dense forests cover 81% of the island, Sibuyan still faces threats from mining, charcoal-making, and unregulated harvesting of timber and non-timber forest products. The indigenous peoples in Sibuyan Island are the Sibuyan Mangyan Tagabukid."
@@ -138,16 +97,9 @@
     "id": "upper-marikina-river-basin",
     "name": "Upper Marikina River Basin Protected Landscape, Rizal",
     "locationText": "Rizal",
-    "themes": [
-      "watershed",
-      "forest"
-    ],
-    "lguPcodes": [
-      "PH0405802",
-      "PH0405808",
-      "PH0405811",
-      "PH0405812"
-    ],
+    "status": "closed",
+    "themes": ["watershed", "forest"],
+    "lguPcodes": ["PH0405802", "PH0405808", "PH0405811", "PH0405812"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/5f78a85c7ad4163aed9678d2b1716cab.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/upper-marikina-river-basin-protected-landscape-rizal",
     "summary": "The aftermath of the 2009 typhoon Ondoy left this critical watershed reserve in the limelight, drawing much attention to the denuded state of its forest cover. FPE commissioned a research effort in Boso-Boso and Tayabasan, two of the four sub-watersheds of the site, where an approach that covers both biophysical and the socio-economic dimensions was applied."
@@ -156,16 +108,9 @@
     "id": "zambales-mountain-range",
     "name": "Zambales Mountain Range",
     "locationText": "Zambales",
-    "themes": [
-      "forest",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH0307101",
-      "PH0307102",
-      "PH0307111",
-      "PH0307104"
-    ],
+    "status": "closed",
+    "themes": ["forest", "ip"],
+    "lguPcodes": ["PH0307101", "PH0307102", "PH0307111", "PH0307104"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/f2a7b4d9f9e53112d6f6695970afc8ca.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/zambales-mountain-range",
     "summary": "In Zambales, the eruption of Mt. Pinatubo in 1991 resulted in the displacement and separation of the Aetas from their ancestral land, depriving them of their lifeblood. Today the spirit of “Kainumayan,” the name by which the Aetas referred to FPE’s enabling and supporting intervention, once again fuels their drive for self-sufficiency and well-being."
@@ -174,16 +119,9 @@
     "id": "cebu",
     "name": "Cebu",
     "locationText": "Cebu",
-    "themes": [
-      "forest",
-      "watershed"
-    ],
-    "lguPcodes": [
-      "PH0702222",
-      "PH0702202",
-      "PH0702217",
-      "PH0702208"
-    ],
+    "status": "closed",
+    "themes": ["forest", "watershed"],
+    "lguPcodes": ["PH0702222", "PH0702202", "PH0702217", "PH0702208"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/5c361872118c89b9fb04854f8c7a7b09.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/cebu",
     "summary": "Cebu is globally recognized as an important bird area, having three critical forest habitats, namely, Nug-as forest, Palinpinon range in Dalaguete, and the Tabunan forest, a component of the Central Cebu Protected Landscape (CCPL). The ecologically and socio-economically significant Mananga Watershed Forest Reserve is also found within the CCPL."
@@ -192,12 +130,9 @@
     "id": "eastern-samar",
     "name": "Eastern Samar",
     "locationText": "Eastern Samar",
-    "themes": [
-      "coastal"
-    ],
-    "lguPcodes": [
-      "PH0802609"
-    ],
+    "status": "ongoing",
+    "themes": ["coastal"],
+    "lguPcodes": ["PH0802609"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/6cdbdcc9eeda3005716fe069625899eb.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/eastern-samar",
     "summary": "One of FPE’s long-standing priority sites, conservation efforts in Guiuan suffered a massive setback in late 2013 when Typhoon Yolanda ravaged the high-biodiversity coastal town. Prior to this calamity, however, measures have been put in place to counter-act the destructive impacts of unregulated infrastructural activities, blast- and cyanide-fishing, and human encroachment on coastal resource-dependent livelihood."
@@ -206,13 +141,9 @@
     "id": "gigantes-islands-iloilo",
     "name": "Gigantes Islands, Iloilo",
     "locationText": "Carles, Iloilo",
-    "themes": [
-      "island",
-      "coastal"
-    ],
-    "lguPcodes": [
-      "PH0603014"
-    ],
+    "status": "new",
+    "themes": ["island", "coastal"],
+    "lguPcodes": ["PH0603014"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/66b366fa5d507349205380e2c8b904f5.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/gigantes-islands-iloilo",
     "summary": "The Gigantes group of islands in Carles, Iloilo are endowed with limestone forests, caves, and white-sand beaches. It is classified as a high urgent conservation priority under the Philippine Biodiversity Conservation Priority-Setting Program (PBCPP). It is home to a wide variety of species, 2 of them endemic: the Gekkonid Lizard (Gekko gigante) and the Island Forest Frog (Platymantis insulatus). The 44,249-hectare site is marred with political, economic, and cultural issues, which result in resource degradation, insecurity, and vulnerability of the island and its communities."
@@ -221,10 +152,9 @@
     "id": "leyte",
     "name": "Leyte",
     "locationText": "Leyte",
+    "status": "ongoing",
     "themes": [],
-    "provincePcodes": [
-      "PH08037"
-    ],
+    "provincePcodes": ["PH08037"],
     "image": null,
     "url": "https://fpe.ph/conservation_site/location_details/leyte",
     "summary": ""
@@ -233,15 +163,9 @@
     "id": "mt-nacolod-southern-leyte",
     "name": "Mt. Nacolod, Southern Leyte",
     "locationText": "Southern Leyte",
-    "themes": [
-      "forest"
-    ],
-    "lguPcodes": [
-      "PH0806414",
-      "PH0806417",
-      "PH0806405",
-      "PH0806412"
-    ],
+    "status": "new",
+    "themes": ["forest"],
+    "lguPcodes": ["PH0806414", "PH0806417", "PH0806405", "PH0806412"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/c0289a099b1fceb8a43a191ba741daf0.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/mt.-nacolod-southern-leyte",
     "summary": "Mt. Nacolod is a very high priority key biodiversity area (KBA). It is a prime location for the region’s flora and fauna, being home to more than half of Leyte's known plant species. It harbors 134 birds, 111 herpetofauna species, and almost all known mammal species recorded in this area. A recent survey of this KBA also brought new discoveries: three species of volant mammals, cinnamon, and two new frog species of the Platymantis family. However, the conservation of Mt. Nacolod is still challenged by illegal collection and poaching of wildlife, conversion to agricultural use, and conflicting land tenurialship, among others."
@@ -250,17 +174,10 @@
     "id": "negros-occidental",
     "name": "Negros Occidental",
     "locationText": "Negros Occidental",
-    "themes": [
-      "forest",
-      "watershed"
-    ],
-    "provincePcodes": [
-      "PH06045"
-    ],
-    "center": [
-      123.17,
-      10.66
-    ],
+    "status": "ongoing",
+    "themes": ["forest", "watershed"],
+    "provincePcodes": ["PH06045"],
+    "center": [123.17, 10.66],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/3a8ed39ea0968a85a0db1e7782433322.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/negros-occidental",
     "summary": "The North Negros Forest Reserve (NNFR) is one of the critical resources of Negros Occidental, as its remaining old-growth rainforest is said to be the last intact watershed in the province. Unabated resource exploitation, especially logging and extraction for charcoal production as well as rattan, ferns, and orchids trade, have posed as primary threats to the local biodiversity."
@@ -269,15 +186,9 @@
     "id": "panay-island",
     "name": "Panay Island",
     "locationText": "Panay Island",
-    "themes": [
-      "forest"
-    ],
-    "provincePcodes": [
-      "PH06004",
-      "PH06006",
-      "PH06019",
-      "PH06030"
-    ],
+    "status": "closed",
+    "themes": ["forest"],
+    "provincePcodes": ["PH06004", "PH06006", "PH06019", "PH06030"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/53ff759d462d51f5fc9a3962fdda402e.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/panay-island",
     "summary": "Hosting the few remaining intact forests in Panay island, this area is the best hope for the survival of the highly endangered endemic inhabitants of Western Visayas. The threats here come in the form of habitat destruction due to over-exploitation of lumber resources. Hunting and poaching of wildlife, as well as mining activities also pose notable conservation challenges."
@@ -286,12 +197,9 @@
     "id": "samar-island-natural-park",
     "name": "Samar Island Natural Park",
     "locationText": "Samar",
+    "status": "closed",
     "themes": [],
-    "provincePcodes": [
-      "PH08060",
-      "PH08026",
-      "PH08048"
-    ],
+    "provincePcodes": ["PH08060", "PH08026", "PH08048"],
     "image": null,
     "url": "https://fpe.ph/conservation_site/location_details/samar-island-natural-park",
     "summary": ""
@@ -300,10 +208,9 @@
     "id": "siquijor",
     "name": "Siquijor",
     "locationText": "Siquijor",
+    "status": "ongoing",
     "themes": [],
-    "provincePcodes": [
-      "PH07061"
-    ],
+    "provincePcodes": ["PH07061"],
     "image": null,
     "url": "https://fpe.ph/conservation_site/location_details/siquijor",
     "summary": ""
@@ -312,10 +219,8 @@
     "id": "agusan-river-basin",
     "name": "Agusan River Basin",
     "locationText": "Agusan del Sur",
-    "themes": [
-      "wetland",
-      "watershed"
-    ],
+    "status": "new",
+    "themes": ["wetland", "watershed"],
     "lguPcodes": [
       "PH1600311",
       "PH1600304",
@@ -333,13 +238,9 @@
     "id": "arakan-north-cotabato",
     "name": "Arakan, North Cotabato",
     "locationText": "North Cotabato",
-    "themes": [
-      "forest",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH1204718"
-    ],
+    "status": "ongoing",
+    "themes": ["forest", "ip"],
+    "lguPcodes": ["PH1204718"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/a6939a2e087f523020b0d99ca8ad4932.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/arakan-north-cotabato",
     "summary": "Arakan Valley is a 4,024.73-hectare territory that represents the southern end of the Central Mindanao Cordillera and serves as home to the Manobo indigenous people. Primary growth forests have shrunk to less than 5% by the early 1990s due to massive commercial logging and land conversion for agricultural use, but further forest degradation has since been curtailed."
@@ -348,13 +249,9 @@
     "id": "dinagat-island",
     "name": "Dinagat Island, Surigao del Norte",
     "locationText": "Dinagat Islands",
-    "themes": [
-      "island",
-      "coastal"
-    ],
-    "provincePcodes": [
-      "PH16085"
-    ],
+    "status": "closed",
+    "themes": ["island", "coastal"],
+    "provincePcodes": ["PH16085"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/9db1b74e25da0a83fe890b9376528160.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/dinagat-island-surigao-del-norte",
     "summary": "The Dinagat islands are known for a range of natural resources – from metallurgical-grade chromite, to magkono (Philippine ironwood), and its rich fishing grounds. As such, the area has been subjected to resource degradation, further spurred by the generally poor economic and socio-political conditions of the province, as well as by extreme weather conditions."
@@ -363,9 +260,8 @@
     "id": "lake-mainit",
     "name": "Lake Mainit, Agusan Del Norte and Surigao Del Sur",
     "locationText": "Agusan Del Norte, Surigao Del Norte",
-    "themes": [
-      "wetland"
-    ],
+    "status": "ongoing",
+    "themes": ["wetland"],
     "lguPcodes": [
       "PH1606714",
       "PH1606701",
@@ -381,14 +277,9 @@
     "id": "mindanao-river-basin",
     "name": "Mindanao River Basin",
     "locationText": "",
-    "themes": [
-      "watershed"
-    ],
-    "provincePcodes": [
-      "PH12047",
-      "PH19088",
-      "PH19087"
-    ],
+    "status": "new",
+    "themes": ["watershed"],
+    "provincePcodes": ["PH12047", "PH19088", "PH19087"],
     "image": null,
     "url": "https://fpe.ph/conservation_site/location_details/mindanao-river-basin",
     "summary": ""
@@ -397,16 +288,9 @@
     "id": "mt-malindang",
     "name": "Mt. Malindang, Misamis Occidental",
     "locationText": "Misamis Occidental",
-    "themes": [
-      "forest",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH1004217",
-      "PH1004204",
-      "PH1004213",
-      "PH1004208"
-    ],
+    "status": "closed",
+    "themes": ["forest", "ip"],
+    "lguPcodes": ["PH1004217", "PH1004204", "PH1004213", "PH1004208"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/416ac11f5ce42561c261479c09858112.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/mt.-malindang-misamis-occidental",
     "summary": "Mt. Malindang Range Natural Park is notable not only for being the highest natural landmark in the Zamboanga biogeographic region, but also for the economic, and cultural significance of its innate biodiversity. The Subanen indigenous peoples are the primary partners on the ground that FPE assists and enables in this priority conservation site."
@@ -415,16 +299,9 @@
     "id": "mt-matutum-protected-landscape",
     "name": "Mt. Matutum Protected Landscape",
     "locationText": "South Cotabato",
-    "themes": [
-      "forest",
-      "watershed"
-    ],
-    "lguPcodes": [
-      "PH1206312",
-      "PH1206317",
-      "PH1206314",
-      "PH1208003"
-    ],
+    "status": "closed",
+    "themes": ["forest", "watershed"],
+    "lguPcodes": ["PH1206312", "PH1206317", "PH1206314", "PH1208003"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/58c4f2bf4b8675a78b6ac665e4448621.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/mt.-matutum-protected-landscape",
     "summary": "Covering four municipalities, Mt. Matutum is a major watershed that supplies 25% of the water requirement of the SOCCSKSARGEN area. It is also home to various rare endemic birds and mammals, but destructive and unsustainable human activities, along socio-political influences are placing a heavy strain on the natural resources of the Mt. Matutum Protected Landscape."
@@ -433,17 +310,9 @@
     "id": "pantaron-range-bukidnon",
     "name": "Pantaron Range, Bukidnon",
     "locationText": "Bukidnon",
-    "themes": [
-      "forest",
-      "watershed",
-      "ip"
-    ],
-    "lguPcodes": [
-      "PH1001322",
-      "PH1001318",
-      "PH1001317",
-      "PH1001312"
-    ],
+    "status": "closed",
+    "themes": ["forest", "watershed", "ip"],
+    "lguPcodes": ["PH1001322", "PH1001318", "PH1001317", "PH1001312"],
     "image": "https://fpe.ph/uploads/conservation_site/thumbnails/6ca05f1c66a5742821eadc30aa16bc0d.jpg",
     "url": "https://fpe.ph/conservation_site/location_details/pantaron-range-bukidnon",
     "summary": "While not very well known, the Pantaron mountain range in Bukidnon is a haven of biodiversity. Various species of threatened endemic fauna seek refuge within the vital watersheds that this mountain range hosts. High incidence of poverty and tenurial issues are strong influences on the lives of the indigenous Manobos or Lumads, who rely largely on the natural resources of the range."
@@ -452,10 +321,8 @@
     "id": "upper-pulangi-watershed-bukidnon",
     "name": "Upper Pulangi Watershed, Bukidnon",
     "locationText": "Bukidnon",
-    "themes": [
-      "watershed",
-      "ip"
-    ],
+    "status": "closed",
+    "themes": ["watershed", "ip"],
     "lguPcodes": [
       "PH1001309",
       "PH1001317",

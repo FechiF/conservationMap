@@ -1,15 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { LOCAL_STORAGE_KEY, PAGE_SIZE, islandGroups } from '../config';
+import { LOCAL_STORAGE_KEY, PAGE_SIZE, status } from '../config';
 import { useAdminData } from '../hooks/useAdminData';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
-import { islandGroupOf, makeId, meanCenter, unionBBox } from '../utilities';
+import { makeId, meanCenter, unionBBox } from '../utilities';
 import DetailPanel from './DetailPanel';
 import MapView from './MapView';
 import SiteForm from './SiteForm';
 import SiteList from './SiteList';
 
-const defaultFilters = { query: '', group: 'all', theme: 'all', sort: 'name', onlyOnMap: true };
-const groupOrder = Object.fromEntries(islandGroups.map((g, i) => [g.key, i]));
+const defaultFilters = {
+  query: '',
+  status: 'all',
+  theme: 'all',
+  sort: 'name',
+  onlyOnMap: true,
+};
+const groupOrder = Object.fromEntries(status.map((g, i) => [g.key, i]));
 
 /**
  * Join a site to the city/municipality polygons it covers: either an explicit
@@ -26,13 +32,20 @@ function resolveSite(s, admin) {
     }
   };
   (s.lguPcodes ?? []).forEach((p) => add(admin.byPcode[p]));
-  (s.provincePcodes ?? []).forEach((p) => (admin.byProvince[p] ?? []).forEach(add));
+  (s.provincePcodes ?? []).forEach((p) =>
+    (admin.byProvince[p] ?? []).forEach(add),
+  );
   if (!lgus.length) return null;
 
   const bbox = unionBBox(lgus.map((l) => l.bbox));
-  const centers = (s.lguPcodes ?? []).map((p) => admin.byPcode[p]?.center).filter(Boolean);
+  const centers = (s.lguPcodes ?? [])
+    .map((p) => admin.byPcode[p]?.center)
+    .filter(Boolean);
   const lngLat =
-    s.center ?? (centers.length ? meanCenter(centers) : [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]);
+    s.center ??
+    (centers.length
+      ? meanCenter(centers)
+      : [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]);
   const first = lgus[0];
   return {
     ...s,
@@ -42,7 +55,6 @@ function resolveSite(s, admin) {
     features: lgus.map((l) => l.feature),
     region: first.region,
     regionPcode: first.regionPcode,
-    group: islandGroupOf(first.regionPcode),
     provinces: [...new Set(lgus.map((l) => l.province))],
   };
 }
@@ -68,7 +80,9 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
     let cancelled = false;
     fetch(sitesUrl)
       .then((r) => (r.ok ? r.json() : []))
-      .then((rows) => !cancelled && setPublished(Array.isArray(rows) ? rows : []))
+      .then(
+        (rows) => !cancelled && setPublished(Array.isArray(rows) ? rows : []),
+      )
       .catch(() => !cancelled && setPublished([]));
     return () => {
       cancelled = true;
@@ -77,43 +91,57 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
 
   const pins = useMemo(() => {
     if (admin.status !== 'ready') return [];
-    return [...local, ...published].map((s) => resolveSite(s, admin)).filter(Boolean);
+    return [...local, ...published]
+      .map((s) => resolveSite(s, admin))
+      .filter(Boolean);
   }, [local, published, admin]);
 
   const matching = useMemo(() => {
     const q = filters.query.trim().toLowerCase();
+    
+
     return pins.filter((s) => {
-      if (filters.group !== 'all' && s.group !== filters.group) return false;
-      if (filters.theme !== 'all' && !(s.themes ?? []).includes(filters.theme)) return false;
+      if (filters.status !== 'all' && s.status !== filters.status) return false;
+      if (filters.theme !== 'all' && !(s.themes ?? []).includes(filters.theme))
+        return false;
       if (q) {
-        const hay = `${s.name} ${s.locationText ?? ''} ${s.provinces.join(' ')} ${s.lgus
-          .map((l) => l.name)
-          .join(' ')}`.toLowerCase();
+        const hay =
+          `${s.name} ${s.locationText ?? ''} ${s.provinces.join(' ')} ${s.lgus
+            .map((l) => l.name)
+            .join(' ')}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [pins, filters.group, filters.theme, filters.query]);
+  }, [pins, filters.status, filters.theme, filters.query]);
 
   const onMap = useMemo(
-    () => (bounds ? matching.filter((s) => bounds.contains(s.lngLat)) : matching),
-    [matching, bounds]
+    () =>
+      bounds ? matching.filter((s) => bounds.contains(s.lngLat)) : matching,
+    [matching, bounds],
   );
 
   const listItems = useMemo(() => {
     const sorted = [...(filters.onlyOnMap ? onMap : matching)];
     const byName = (a, b) => a.name.localeCompare(b.name, 'en');
-    if (filters.sort === 'group') {
-      sorted.sort((a, b) => groupOrder[a.group] - groupOrder[b.group] || b.lngLat[1] - a.lngLat[1]);
+    const byStatus = (a, b) => a.status.localeCompare(b.status, 'en');
+    if (filters.sort === 'status') {
+      sorted.sort(byStatus);
     } else if (filters.sort === 'newest') {
-      sorted.sort((a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0) || byName(a, b));
+      sorted.sort(
+        (a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0) || byName(a, b),
+      );
     } else sorted.sort(byName);
     return sorted;
   }, [filters.onlyOnMap, filters.sort, onMap, matching]);
 
   const selected = pins.find((p) => p.id === selectedId) ?? null;
   const previewLgu = admin.byPcode[previewPcode] ?? null;
-  const highlight = selected ? selected.features : previewLgu ? [previewLgu.feature] : null;
+  const highlight = selected
+    ? selected.features
+    : previewLgu
+      ? [previewLgu.feature]
+      : null;
 
   const handleBoundsChange = useCallback((b) => setBounds(b), []);
   const handleSelect = useCallback((id) => {
@@ -148,9 +176,14 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
     <div className="fpe" style={{ '--fpe-height': height }}>
       <aside className="fpe-side">
         <header className="fpe-head">
-          <p className="fpe-eyebrow">Foundation for the Philippine Environment</p>
+          <p className="fpe-eyebrow">
+            Foundation for the Philippine Environment
+          </p>
           <h2 className="fpe-title">Priority Conservation Sites</h2>
-          <p className="fpe-sub">Where FPE works with communities to protect biodiversity · {totalLabel}</p>
+          <p className="fpe-sub">
+            Where FPE works with communities to protect biodiversity ·{' '}
+            {totalLabel}
+          </p>
           <div className="fpe-tabs" role="tablist">
             <button
               role="tab"
@@ -179,8 +212,12 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
         </header>
 
         <div className="fpe-body">
-          {admin.status === 'loading' && <p className="fpe-empty">Loading map data…</p>}
-          {admin.status === 'error' && <p className="fpe-error">{admin.error}</p>}
+          {admin.status === 'loading' && (
+            <p className="fpe-empty">Loading map data…</p>
+          )}
+          {admin.status === 'error' && (
+            <p className="fpe-error">{admin.error}</p>
+          )}
 
           {admin.status === 'ready' && tab === 'add' && (
             <SiteForm
@@ -191,35 +228,40 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
             />
           )}
 
-          {admin.status === 'ready' && tab === 'browse' && showDetail && selected && (
-            <DetailPanel
-              site={selected}
-              onBack={() => {
-                setShowDetail(false);
-                setSelectedId(null);
-              }}
-            />
-          )}
+          {admin.status === 'ready' &&
+            tab === 'browse' &&
+            showDetail &&
+            selected && (
+              <DetailPanel
+                site={selected}
+                onBack={() => {
+                  setShowDetail(false);
+                  setSelectedId(null);
+                }}
+              />
+            )}
 
-          {admin.status === 'ready' && tab === 'browse' && !(showDetail && selected) && (
-            <SiteList
-              items={listItems}
-              total={matching.length}
-              onMapOnly={onMap.length}
-              filters={filters}
-              setFilters={updateFilters}
-              onSelect={handleSelect}
-              selectedId={selectedId}
-              visibleCount={visibleCount}
-              onShowMore={() => setVisibleCount((c) => c + PAGE_SIZE)}
-              demoCount={local.length}
-              onClearDemo={() => {
-                setLocal([]);
-                setSelectedId(null);
-                setShowDetail(false);
-              }}
-            />
-          )}
+          {admin.status === 'ready' &&
+            tab === 'browse' &&
+            !(showDetail && selected) && (
+              <SiteList
+                items={listItems}
+                total={matching.length}
+                onMapOnly={onMap.length}
+                filters={filters}
+                setFilters={updateFilters}
+                onSelect={handleSelect}
+                selectedId={selectedId}
+                visibleCount={visibleCount}
+                onShowMore={() => setVisibleCount((c) => c + PAGE_SIZE)}
+                demoCount={local.length}
+                onClearDemo={() => {
+                  setLocal([]);
+                  setSelectedId(null);
+                  setShowDetail(false);
+                }}
+              />
+            )}
         </div>
       </aside>
 

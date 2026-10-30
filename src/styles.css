@@ -186,6 +186,15 @@
   background: var(--color-gold);
   border-color: var(--color-gold);
 }
+.fpe .fpe-btn--accent {
+  background: var(--accent-light);
+  border-color: var(--accent-light);
+  color: var(--color-pale);
+}
+.fpe .fpe-btn--accent:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
 .fpe .fpe-btn--block {
   width: 100%;
   margin-top: 12px;

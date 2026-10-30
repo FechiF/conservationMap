@@ -1,6 +1,6 @@
 import { themeLabel } from '../config';
 import { formatDate, safeUrl, siteLocation } from '../utilities';
-import { GroupTag } from './SiteList';
+import { StatusTag } from './SiteList';
 
 export default function DetailPanel({ site: s, onBack }) {
   const link = safeUrl(s.url);
@@ -8,7 +8,9 @@ export default function DetailPanel({ site: s, onBack }) {
 
   return (
     <article className="fpe-detail">
-      <button type="button" className="fpe-link" onClick={onBack}>← Back to list</button>
+      <button type="button" className="fpe-link" onClick={onBack}>
+        ← Back to list
+      </button>
 
       {s.image && (
         <img
@@ -22,13 +24,15 @@ export default function DetailPanel({ site: s, onBack }) {
       )}
 
       <header>
-        <GroupTag group={s.group} />
+        <StatusTag status={s.staus} />
         <h2>{s.name}</h2>
         <p className="fpe-muted">{siteLocation(s)}</p>
       </header>
 
       {s.demo && (
-        <p className="fpe-note">Demo entry — added in this browser only, not part of FPE's directory.</p>
+        <p className="fpe-note">
+          Demo entry — added in this browser only, not part of FPE's directory.
+        </p>
       )}
 
       {s.themes?.length > 0 && (
@@ -43,7 +47,9 @@ export default function DetailPanel({ site: s, onBack }) {
       {s.summary ? (
         <p className="fpe-detail__text">{s.summary}</p>
       ) : (
-        <p className="fpe-muted">A write-up for this site isn't available here yet.</p>
+        <p className="fpe-muted">
+          A write-up for this site isn't available here yet.
+        </p>
       )}
 
       <dl className="fpe-facts">
@@ -70,7 +76,12 @@ export default function DetailPanel({ site: s, onBack }) {
       </dl>
 
       {link && (
-        <a className="fpe-btn fpe-btn--primary" href={link} target="_blank" rel="noopener noreferrer">
+        <a
+          className="fpe-btn fpe-btn--accent"
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {s.demo ? 'Visit link' : 'View on fpe.ph'} →
         </a>
       )}

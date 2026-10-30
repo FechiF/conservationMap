@@ -14,16 +14,17 @@ export const mapDefaults = {
   maxZoom: 14,
 };
 
-// Island group is derived from the PSGC region code (see islandGroupOf in utilities.js)
-export const islandGroups = [
-  { key: 'luzon', label: 'Luzon', color: '#118391' },
-  { key: 'visayas', label: 'Visayas', color: '#7f9c1c' },
-  { key: 'mindanao', label: 'Mindanao', color: '#05454e' },
+export const status = [
+  { key: 'ongoing', label: 'Ongoing', color: '#118391' },
+  { key: 'new', label: 'New', color: '#7f9c1c' },
+  { key: 'closed', label: 'Closed', color: '#05454e' },
+  { key: 'planned', label: 'To be opened', color: '#da6a37' },
 ];
-export const groupColor = (key) =>
-  islandGroups.find((g) => g.key === key)?.color ?? '#118391';
-export const groupLabel = (key) =>
-  islandGroups.find((g) => g.key === key)?.label ?? key;
+export const statusColor = (key) =>
+  status.find((s) => s.key === key)?.color ?? '#118391';
+
+export const statusLabel = (key) =>
+  status.find((s) => s.key === key)?.label ?? key;
 
 // What kind of place a site is. Used for filter + chips.
 export const themeOptions = [
@@ -39,7 +40,7 @@ export const themeLabel = (key) =>
 
 export const sortOptions = [
   { key: 'name', label: 'Name (A–Z)' },
-  { key: 'group', label: 'North to south' },
+  { key: 'status', label: 'Status' },
   { key: 'newest', label: 'Recently added' },
 ];
 

@@ -4,8 +4,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   DEFAULT_STYLE_URL,
   mapDefaults,
-  groupColor,
-  groupLabel,
+  statusColor,
+  statusLabel,
   themeLabel,
 } from '../config';
 import { siteLocation } from '../utilities';
@@ -32,8 +32,8 @@ function popupContent(site, onOpen) {
   root.appendChild(el('div', 'fpe-popup__sub', siteLocation(site)));
 
   const meta = el('div', 'fpe-popup__meta');
-  const tag = el('span', 'fpe-tag', groupLabel(site.group));
-  tag.style.setProperty('--tag', groupColor(site.group));
+  const tag = el('span', 'fpe-tag', statusLabel(site.group));
+  tag.style.setProperty('--tag', statusColor(site.group));
   meta.appendChild(tag);
   (site.themes ?? [])
     .slice(0, 2)
@@ -136,7 +136,7 @@ export default function MapView({
       const holder = el('div', 'fpe-pin-holder');
       const node = el('button', 'fpe-pin');
       node.type = 'button';
-      node.style.setProperty('--pin', groupColor(pin.group));
+      node.style.setProperty('--pin', statusColor(pin.group));
       node.setAttribute('aria-label', pin.name);
       node.innerHTML = PIN_SVG; // static markup, no user content
       node.addEventListener('click', (e) => {

@@ -29,6 +29,7 @@ npm run build      # -> dist/fpe-sites-map.js, .css, data/
   "id": "cebu",
   "name": "Cebu",
   "locationText": "Cebu",
+  "status": "ongoing",
   "themes": ["forest", "watershed"],
   "lguPcodes": ["PH0702222", "PH0702202"],
   "provincePcodes": [],
@@ -39,22 +40,18 @@ npm run build      # -> dist/fpe-sites-map.js, .css, data/
 }
 ```
 
-  - Give each site `lguPcodes` (specific cities/municipalities) and/or `provincePcodes` (whole provinces).
-    Every listed LGU is outlined; the pin sits at the mean of the `lguPcodes` centroids, or the
-    bounding-box centre for province-only sites. `center` ([lng, lat]) overrides the pin.
-  - `themes`: `forest`, `watershed`, `coastal`, `wetland`, `island`, `ip`. Island group is derived from the region.
-  - `image` may be `null`; `summary` may be empty (the panel says a write-up isn't available).
-
-> **Please review:** the LGU assignments are my best match to FPE's site descriptions
-> (e.g. Matutum, Pantaron, Upper Pulangi, Banahaw). Four sites (Leyte, Samar Island, Siquijor,
-> Mindanao River Basin) have no write-up on fpe.ph, so they show at province level with no text.
+- Give each site `lguPcodes` (specific cities/municipalities) and/or `provincePcodes` (whole provinces).
+  Every listed LGU is outlined; the pin sits at the mean of the `lguPcodes` centroids, or the
+  bounding-box centre for province-only sites. `center` ([lng, lat]) overrides the pin.
+- `themes`: `forest`, `watershed`, `coastal`, `wetland`, `island`, `ip`. Island group is derived from the region.
+- `image` may be `null`; `summary` may be empty (the panel says a write-up isn't available).
 
 ## Embedding in WordPress
 
 Upload `dist/fpe-sites-map.js`, `dist/fpe-sites-map.css` and `dist/data/` to one folder, then in a Custom HTML block:
 
 ```html
-<link rel="stylesheet" href="/wp-content/uploads/fpe-map/fpe-sites-map.css">
+<link rel="stylesheet" href="/wp-content/uploads/fpe-map/fpe-sites-map.css" />
 <div data-fpe-sites-map data-height="720px"></div>
 <script src="/wp-content/uploads/fpe-map/fpe-sites-map.js"></script>
 ```

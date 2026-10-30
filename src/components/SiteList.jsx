@@ -1,7 +1,7 @@
 import {
-  groupColor,
-  groupLabel,
-  islandGroups,
+  statusColor,
+  statusLabel,
+  status,
   themeLabel,
   themeOptions,
   sortOptions,
@@ -9,10 +9,10 @@ import {
 } from '../config';
 import { siteLocation } from '../utilities';
 
-export function GroupTag({ group }) {
+export function StatusTag({ status }) {
   return (
-    <span className="fpe-tag" style={{ '--tag': groupColor(group) }}>
-      {groupLabel(group)}
+    <span className="fpe-tag" style={{ '--tag': statusColor(status) }}>
+      {statusLabel(status)}
     </span>
   );
 }
@@ -44,14 +44,14 @@ export default function SiteList({
         />
         <div className="fpe-filters__row">
           <select
-            value={filters.group}
-            onChange={(e) => setFilters({ ...filters, group: e.target.value })}
-            aria-label="Filter by island group"
+            value={filters.status}
+            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+            aria-label="Filter by status"
           >
-            <option value="all">All island groups</option>
-            {islandGroups.map((g) => (
-              <option key={g.key} value={g.key}>
-                {g.label}
+            <option value="all">All Status</option>
+            {status.map((s) => (
+              <option key={s.key} value={s.key}>
+                {s.label}
               </option>
             ))}
           </select>
@@ -60,7 +60,7 @@ export default function SiteList({
             onChange={(e) => setFilters({ ...filters, theme: e.target.value })}
             aria-label="Filter by habitat type"
           >
-            <option value="all">All habitats</option>
+            <option value="all">All themes</option>
             {themeOptions.map((t) => (
               <option key={t.key} value={t.key}>
                 {t.label}
@@ -92,7 +92,7 @@ export default function SiteList({
       </div>
 
       <div className="fpe-legend" aria-label="Map legend">
-        {islandGroups.map((g) => (
+        {status.map((g) => (
           <span key={g.key}>
             <i style={{ background: g.color }} /> {g.label}
           </span>
@@ -119,14 +119,14 @@ export default function SiteList({
               <button
                 type="button"
                 className={`fpe-card${s.id === selectedId ? ' is-selected' : ''}`}
-                style={{ '--tag': groupColor(s.group) }}
+                style={{ '--tag': statusColor(s.status) }}
                 onClick={() => onSelect(s.id)}
               >
                 <span className="fpe-card__body">
                   <strong>{s.name}</strong>
                   <span className="fpe-card__place">{siteLocation(s)}</span>
                   <span className="fpe-card__meta">
-                    <GroupTag group={s.group} />
+                    <StatusTag status={s.status} />
                     {s.themes?.slice(0, 2).map((t) => (
                       <span key={t}>{themeLabel(t)}</span>
                     ))}
