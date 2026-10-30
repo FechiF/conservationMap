@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { LOCAL_STORAGE_KEY, PAGE_SIZE, status } from '../config';
+import {
+  LOCAL_STORAGE_KEY,
+  PAGE_SIZE,
+  status as statuses,
+  statusColor,
+} from '../config';
 import { useAdminData } from '../hooks/useAdminData';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
 import { makeId, meanCenter, unionBBox } from '../utilities';
@@ -13,9 +18,9 @@ const defaultFilters = {
   status: 'all',
   theme: 'all',
   sort: 'name',
-  onlyOnMap: true,
+  onlyOnMap: false,
 };
-const groupOrder = Object.fromEntries(status.map((g, i) => [g.key, i]));
+const statusOrder = Object.fromEntries(statuses.map((g, i) => [g.key, i]));
 
 /**
  * Join a site to the city/municipality polygons it covers: either an explicit
@@ -55,6 +60,7 @@ function resolveSite(s, admin) {
     features: lgus.map((l) => l.feature),
     region: first.region,
     regionPcode: first.regionPcode,
+    status: s.status ?? 'ongoing',
     provinces: [...new Set(lgus.map((l) => l.province))],
   };
 }
@@ -98,7 +104,6 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
 
   const matching = useMemo(() => {
     const q = filters.query.trim().toLowerCase();
-
     return pins.filter((s) => {
       if (filters.status !== 'all' && s.status !== filters.status) return false;
       if (filters.theme !== 'all' && !(s.themes ?? []).includes(filters.theme))
@@ -123,14 +128,10 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
   const listItems = useMemo(() => {
     const sorted = [...(filters.onlyOnMap ? onMap : matching)];
     const byName = (a, b) => a.name.localeCompare(b.name, 'en');
-
-    const statusOrder = ['planned', 'new', 'ongoing', 'closed'];
-
-    const byStatus = (a, b) =>
-      statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
-
     if (filters.sort === 'status') {
-      sorted.sort(byStatus);
+      sorted.sort(
+        (a, b) => statusOrder[a.status] - statusOrder[b.status] || byName(a, b),
+      );
     } else if (filters.sort === 'newest') {
       sorted.sort(
         (a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0) || byName(a, b),
@@ -156,6 +157,9 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
   const updateFilters = (f) => {
     setFilters(f);
     setVisibleCount(PAGE_SIZE);
+    // a filter change may remove the open site's pin, so close its popup/panel
+    setSelectedId(null);
+    setShowDetail(false);
   };
 
   function handlePreview(pcode) {
@@ -270,7 +274,7 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
       </aside>
 
       <MapView
-        pins={pins}
+        pins={matching}
         selectedId={selectedId}
         onSelect={handleSelect}
         onOpenPanel={() => {
@@ -279,6 +283,7 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
         }}
         onBoundsChange={handleBoundsChange}
         highlight={highlight}
+        highlightColor={selected ? statusColor(selected.status) : undefined}
         focus={focus}
         styleUrl={styleUrl}
       />

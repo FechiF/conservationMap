@@ -13,7 +13,7 @@ const defaultFilters = {
   group: 'all',
   theme: 'all',
   sort: 'name',
-  onlyOnMap: true,
+  onlyOnMap: false,
 };
 const groupOrder = Object.fromEntries(islandGroups.map((g, i) => [g.key, i]));
 

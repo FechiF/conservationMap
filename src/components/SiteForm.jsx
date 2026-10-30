@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { themeOptions } from '../config';
+import { status as statuses, themeOptions } from '../config';
 import { safeUrl } from '../utilities';
 
 const initial = {
@@ -7,6 +7,7 @@ const initial = {
   regionPcode: '',
   provincePcode: '',
   lguPcode: '',
+  status: 'new',
   themes: [],
   summary: '',
   url: '',
@@ -67,6 +68,7 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
     if (Object.keys(e).length) return;
     onSubmit({
       name: form.name.trim(),
+      status: form.status,
       lguPcodes: [form.lguPcode],
       themes: form.themes,
       summary: form.summary.trim(),
@@ -99,6 +101,21 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
           onChange={(e) => set({ name: e.target.value })}
         />
         {err('name')}
+      </div>
+
+      <div className="fpe-field">
+        <label htmlFor="fpe-status">Status</label>
+        <select
+          id="fpe-status"
+          value={form.status}
+          onChange={(e) => set({ status: e.target.value })}
+        >
+          {statuses.map((st) => (
+            <option key={st.key} value={st.key}>
+              {st.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       <p className="fpe-hint">Location</p>
@@ -199,7 +216,7 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
       </div>
 
       <div className="fpe-actions">
-        <button type="submit" className="fpe-btn fpe-btn--accent">
+        <button type="submit" className="fpe-btn fpe-btn--primary">
           Add to map
         </button>
         <button
