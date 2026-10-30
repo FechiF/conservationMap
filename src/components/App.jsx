@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   LOCAL_STORAGE_KEY,
   PAGE_SIZE,
@@ -6,8 +6,10 @@ import {
   statusColor,
 } from '../config';
 import { useAdminData } from '../hooks/useAdminData';
+import { useCompact } from '../hooks/useCompact';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
 import { makeId, meanCenter, unionBBox } from '../utilities';
+import BottomSheet from './BottomSheet';
 import DetailPanel from './DetailPanel';
 import MapView from './MapView';
 import SiteForm from './SiteForm';
@@ -67,6 +69,10 @@ function resolveSite(s, admin) {
 
 export default function App({ dataBase, height, sitesUrl, styleUrl }) {
   const admin = useAdminData(`${dataBase}lgu.geojson`);
+
+  const rootRef = useRef(null);
+  const compact = useCompact(rootRef); // phone-sized container -> bottom sheet layout
+  const [snap, setSnap] = useState('half'); // bottom sheet: 'peek' | 'half' | 'full'
 
   // Directory sites (in production: sites.json maintained by FPE)
   const [published, setPublished] = useState([]);
@@ -128,10 +134,13 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
   const listItems = useMemo(() => {
     const sorted = [...(filters.onlyOnMap ? onMap : matching)];
     const byName = (a, b) => a.name.localeCompare(b.name, 'en');
+
+    const statusOrder = ['planned', 'new', 'ongoing', 'closed'];
+    const byStatus = (a, b) =>
+      statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+
     if (filters.sort === 'status') {
-      sorted.sort(
-        (a, b) => statusOrder[a.status] - statusOrder[b.status] || byName(a, b),
-      );
+      sorted.sort(byStatus);
     } else if (filters.sort === 'newest') {
       sorted.sort(
         (a, b) => (b.createdAt ?? 0) - (a.createdAt ?? 0) || byName(a, b),
@@ -152,7 +161,10 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
   const handleSelect = useCallback((id) => {
     setSelectedId(id);
     setShowDetail(Boolean(id));
-    if (id) setTab('browse');
+    if (id) {
+      setTab('browse');
+      setSnap('half'); // no-op on desktop; raises the sheet on phones
+    }
   }, []);
   const updateFilters = (f) => {
     setFilters(f);
@@ -180,98 +192,123 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
 
   const totalLabel = `${pins.length} priority site${pins.length === 1 ? '' : 's'}`;
 
+  const headBlock = (
+    <>
+      <p className="fpe-eyebrow">Foundation for the Philippine Environment</p>
+      <h2 className="fpe-title">Priority Conservation Sites</h2>
+      <p className="fpe-sub">
+        Where FPE works with communities to protect biodiversity · {totalLabel}
+      </p>
+    </>
+  );
+
+  const tabsBlock = (
+    <div className="fpe-tabs" role="tablist">
+      <button
+        role="tab"
+        aria-selected={tab === 'browse'}
+        className={tab === 'browse' ? 'is-on' : ''}
+        onClick={() => {
+          setTab('browse');
+          setPreviewPcode(null);
+          if (snap === 'peek') setSnap('half');
+        }}
+      >
+        Browse
+      </button>
+      <button
+        role="tab"
+        aria-selected={tab === 'add'}
+        className={tab === 'add' ? 'is-on' : ''}
+        onClick={() => {
+          setTab('add');
+          setSelectedId(null);
+          setShowDetail(false);
+          setSnap('half'); // half, so the map stays visible for the location preview
+        }}
+      >
+        Add a site (demo)
+      </button>
+    </div>
+  );
+
+  const bodyBlock = (
+    <>
+      {admin.status === 'loading' && (
+        <p className="fpe-empty">Loading map data…</p>
+      )}
+      {admin.status === 'error' && <p className="fpe-error">{admin.error}</p>}
+
+      {admin.status === 'ready' && tab === 'add' && (
+        <SiteForm
+          regions={admin.regions}
+          onPreview={handlePreview}
+          onSubmit={handleSubmit}
+          onCancel={() => setTab('browse')}
+        />
+      )}
+
+      {admin.status === 'ready' &&
+        tab === 'browse' &&
+        showDetail &&
+        selected && (
+          <DetailPanel
+            site={selected}
+            onBack={() => {
+              setShowDetail(false);
+              setSelectedId(null);
+            }}
+          />
+        )}
+
+      {admin.status === 'ready' &&
+        tab === 'browse' &&
+        !(showDetail && selected) && (
+          <SiteList
+            items={listItems}
+            total={matching.length}
+            onMapOnly={onMap.length}
+            filters={filters}
+            setFilters={updateFilters}
+            onSelect={handleSelect}
+            selectedId={selectedId}
+            visibleCount={visibleCount}
+            onShowMore={() => setVisibleCount((c) => c + PAGE_SIZE)}
+            demoCount={local.length}
+            onClearDemo={() => {
+              setLocal([]);
+              setSelectedId(null);
+              setShowDetail(false);
+            }}
+          />
+        )}
+    </>
+  );
+
   return (
-    <div className="fpe" style={{ '--fpe-height': height }}>
-      <aside className="fpe-side">
-        <header className="fpe-head">
-          <p className="fpe-eyebrow">
-            Foundation for the Philippine Environment
-          </p>
-          <h2 className="fpe-title">Priority Conservation Sites</h2>
-          <p className="fpe-sub">
-            Where FPE works with communities to protect biodiversity ·{' '}
-            {totalLabel}
-          </p>
-          <div className="fpe-tabs" role="tablist">
-            <button
-              role="tab"
-              aria-selected={tab === 'browse'}
-              className={tab === 'browse' ? 'is-on' : ''}
-              onClick={() => {
-                setTab('browse');
-                setPreviewPcode(null);
-              }}
-            >
-              Browse
-            </button>
-            <button
-              role="tab"
-              aria-selected={tab === 'add'}
-              className={tab === 'add' ? 'is-on' : ''}
-              onClick={() => {
-                setTab('add');
-                setSelectedId(null);
-                setShowDetail(false);
-              }}
-            >
-              Add a site (demo)
-            </button>
-          </div>
-        </header>
-
-        <div className="fpe-body">
-          {admin.status === 'loading' && (
-            <p className="fpe-empty">Loading map data…</p>
-          )}
-          {admin.status === 'error' && (
-            <p className="fpe-error">{admin.error}</p>
-          )}
-
-          {admin.status === 'ready' && tab === 'add' && (
-            <SiteForm
-              regions={admin.regions}
-              onPreview={handlePreview}
-              onSubmit={handleSubmit}
-              onCancel={() => setTab('browse')}
-            />
-          )}
-
-          {admin.status === 'ready' &&
-            tab === 'browse' &&
-            showDetail &&
-            selected && (
-              <DetailPanel
-                site={selected}
-                onBack={() => {
-                  setShowDetail(false);
-                  setSelectedId(null);
-                }}
-              />
-            )}
-
-          {admin.status === 'ready' &&
-            tab === 'browse' &&
-            !(showDetail && selected) && (
-              <SiteList
-                items={listItems}
-                total={matching.length}
-                onMapOnly={onMap.length}
-                filters={filters}
-                setFilters={updateFilters}
-                onSelect={handleSelect}
-                selectedId={selectedId}
-                visibleCount={visibleCount}
-                onShowMore={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                demoCount={local.length}
-                onClearDemo={() => {
-                  setLocal([]);
-                  setSelectedId(null);
-                  setShowDetail(false);
-                }}
-              />
-            )}
-        </div>
-      </aside>
+    <div
+      ref={rootRef}
+      className={`fpe${compact ? ' fpe--compact' : ''}`}
+      style={{ '--fpe-height': height }}
+    >
+      {compact ? (
+        <BottomSheet
+          snap={snap}
+          onSnapChange={setSnap}
+          header={headBlock}
+          toolbar={tabsBlock}
+        >
+          {bodyBlock}
+        </BottomSheet>
+      ) : (
+        <aside className="fpe-side">
+          <header className="fpe-head">
+            {headBlock}
+            {tabsBlock}
+          </header>
+          <div className="fpe-body">{bodyBlock}</div>
+        </aside>
+      )}
 
       <MapView
         pins={matching}
@@ -286,6 +323,11 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
         highlightColor={selected ? statusColor(selected.status) : undefined}
         focus={focus}
         styleUrl={styleUrl}
+        showPopup={!compact}
+        bottomInset={
+          compact ? Math.round((rootRef.current?.clientHeight ?? 0) * 0.5) : 0
+        }
+        onMapClick={() => compact && setSnap('peek')}
       />
     </div>
   );

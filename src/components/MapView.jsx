@@ -63,6 +63,9 @@ export default function MapView({
   highlight,
   focus,
   styleUrl,
+  showPopup = true,
+  bottomInset = 0,
+  onMapClick,
 }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
@@ -71,7 +74,10 @@ export default function MapView({
   const popupRef = useRef(null);
   const highlightRef = useRef(highlight);
   const callbacks = useRef({});
-  callbacks.current = { onSelect, onOpenPanel, onBoundsChange };
+  callbacks.current = { onSelect, onOpenPanel, onBoundsChange, onMapClick };
+  // read at fit time, so changing them doesn't re-run the effects below
+  const view = useRef({});
+  view.current = { showPopup, bottomInset };
   highlightRef.current = highlight;
 
   // --- create the map once -------------------------------------------------
@@ -112,6 +118,7 @@ export default function MapView({
       callbacks.current.onBoundsChange(map.getBounds());
     });
     map.on('moveend', () => callbacks.current.onBoundsChange(map.getBounds()));
+    map.on('click', () => callbacks.current.onMapClick?.());
 
     mapRef.current = map;
     return () => {
@@ -169,25 +176,34 @@ export default function MapView({
     const entry = selectedId && markersRef.current.get(selectedId);
     if (!entry) return;
 
-    const popup = new maplibregl.Popup({
-      offset: [0, -34],
-      maxWidth: '300px',
-      className: 'fpe-popup-wrap',
-    })
-      .setLngLat(entry.pin.lngLat)
-      .setDOMContent(
-        popupContent(entry.pin, () => callbacks.current.onOpenPanel()),
-      )
-      .addTo(map);
-    popup.on('close', () => {
-      if (popupRef.current === popup) {
-        popupRef.current = null;
-        callbacks.current.onSelect(null);
-      }
-    });
-    popupRef.current = popup;
+    const { showPopup: popupOn, bottomInset: inset } = view.current;
+
+    if (popupOn) {
+      const popup = new maplibregl.Popup({
+        offset: [0, -34],
+        maxWidth: '300px',
+        className: 'fpe-popup-wrap',
+      })
+        .setLngLat(entry.pin.lngLat)
+        .setDOMContent(
+          popupContent(entry.pin, () => callbacks.current.onOpenPanel()),
+        )
+        .addTo(map);
+      popup.on('close', () => {
+        if (popupRef.current === popup) {
+          popupRef.current = null;
+          callbacks.current.onSelect(null);
+        }
+      });
+      popupRef.current = popup;
+    }
     map.fitBounds(entry.pin.bbox, {
-      padding: { top: 140, bottom: 60, left: 50, right: 50 },
+      padding: {
+        top: popupOn ? 140 : 80, // no popup to leave room for on phones
+        bottom: 60 + inset, // keep the site visible above the bottom sheet
+        left: 50,
+        right: 50,
+      },
       maxZoom: 9.5,
       duration: 800,
     });
@@ -205,7 +221,12 @@ export default function MapView({
     const map = mapRef.current;
     if (!map || !focus?.bbox) return;
     map.fitBounds(focus.bbox, {
-      padding: { top: 60, bottom: 60, left: 40, right: 40 },
+      padding: {
+        top: 60,
+        bottom: 60 + view.current.bottomInset,
+        left: 40,
+        right: 40,
+      },
       maxZoom: 11,
       duration: 900,
     });
