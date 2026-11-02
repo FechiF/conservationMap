@@ -216,12 +216,12 @@ export default function SiteForm({ regions, onPreview, onSubmit, onCancel }) {
       </div>
 
       <div className="fpe-actions">
-        <button type="submit" className="fpe-btn fpe-btn--primary">
+        <button type="submit" className="fpe-btn">
           Add to map
         </button>
         <button
           type="button"
-          className="fpe-btn"
+          className="fpe-btn fpe-btn--ghost"
           onClick={() => {
             onPreview(null);
             onCancel();

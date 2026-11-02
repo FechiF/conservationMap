@@ -197,7 +197,9 @@ export default function App({ dataBase, height, sitesUrl, styleUrl }) {
       <p className="fpe-eyebrow">Foundation for the Philippine Environment</p>
       <h2 className="fpe-title">Priority Conservation Sites</h2>
       <p className="fpe-sub">
-        Where FPE works with communities to protect biodiversity · {totalLabel}
+        Where FPE works with communities to protect biodiversity
+        {/* <br />
+        {totalLabel} */}
       </p>
     </>
   );

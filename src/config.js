@@ -1,6 +1,5 @@
 // Free, keyless vector basemap (OpenFreeMap). Swap for MapTiler/Stadia/self-hosted if needed.
-export const DEFAULT_STYLE_URL =
-  'https://tiles.openfreemap.org/styles/positron';
+export const DEFAULT_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
 export const mapDefaults = {
   center: [121.774017, 12.879721], // [lng, lat] – Philippines
@@ -17,7 +16,7 @@ export const mapDefaults = {
 export const status = [
   { key: 'ongoing', label: 'Ongoing', color: '#118391' },
   { key: 'new', label: 'New', color: '#7f9c1c' },
-  { key: 'closed', label: 'Closed', color: '#697070' },
+  { key: 'closed', label: 'Closed', color: '#05454e' },
   { key: 'planned', label: 'To be opened', color: '#b3e218' },
 ];
 export const statusColor = (key) =>

@@ -94,22 +94,24 @@ export default function SiteList({
         </label>
       </div>
 
-      <div className="fpe-legend" aria-label="Map legend">
-        {status.map((g) => (
-          <span key={g.key}>
-            <i style={{ background: g.color }} /> {g.label}
-          </span>
-        ))}
-      </div>
+      <div className="fpe-info">
+        <div className="fpe-legend" aria-label="Map legend">
+          {status.map((g) => (
+            <span key={g.key}>
+              <i style={{ background: g.color }} /> {g.label}
+            </span>
+          ))}
+        </div>
 
-      <p className="fpe-count">
-        {filters.onlyOnMap && (
-          <span className="is-active">
-            On map: {onMapOnly.toLocaleString()} ·{' '}
-          </span>
-        )}
-        Total: {total.toLocaleString()}
-      </p>
+        <p className="fpe-count">
+          {filters.onlyOnMap && (
+            <span className="is-active">
+              On map: {onMapOnly.toLocaleString()} ·{' '}
+            </span>
+          )}
+          Total: {total.toLocaleString()}
+        </p>
+      </div>
 
       {shown.length === 0 ? (
         <p className="fpe-empty">
