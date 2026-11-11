@@ -102,7 +102,7 @@ function popupContent(site, onOpen) {
   root.appendChild(btn);
   return root;
 }
-const FIT_PAD = { top: 60, bottom: 20, left: 40, right: 40 };
+const FIT_PAD = { top: 60, bottom: 60, left: 40, right: 40 };
 
 export default function MapView({
   pins,
