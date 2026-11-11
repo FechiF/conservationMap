@@ -699,3 +699,9 @@
 .fpe--compact .fpe-actions .fpe-btn {
   flex: 1;
 }
+
+.fpe-fit-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

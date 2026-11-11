@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
@@ -21,9 +21,58 @@ const asCollection = (features) =>
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
+
   if (className) node.className = className;
   if (text != null) node.textContent = text; // textContent: user text is never parsed as HTML
   return node;
+}
+
+function resultsBBox(pins) {
+  let w = Infinity,
+    s = Infinity,
+    e = -Infinity,
+    n = -Infinity;
+  for (const p of pins) {
+    for (const [lng, lat] of [
+      [p.bbox[0], p.bbox[1]],
+      [p.bbox[2], p.bbox[3]],
+      p.lngLat,
+    ]) {
+      w = Math.min(w, lng);
+      e = Math.max(e, lng);
+      s = Math.min(s, lat);
+      n = Math.max(n, lat);
+    }
+  }
+  return Number.isFinite(w)
+    ? [
+        [w, s],
+        [e, n],
+      ]
+    : null;
+}
+
+const FIT_ICON =
+  '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+
+class FitAllControl {
+  constructor(onClick) {
+    this.onClick = onClick;
+  }
+  onAdd() {
+    this.root = el('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    const b = el('button', 'fpe-fit-all');
+    b.type = 'button';
+    b.title = 'View all sites';
+    b.setAttribute('aria-label', 'View all sites');
+    b.innerHTML = FIT_ICON; // static markup
+    b.addEventListener('click', this.onClick);
+    this.root.appendChild(b);
+    return this.root;
+  }
+  onRemove() {
+    this.root.remove();
+  }
 }
 
 function popupContent(site, onOpen) {
@@ -53,6 +102,7 @@ function popupContent(site, onOpen) {
   root.appendChild(btn);
   return root;
 }
+const FIT_PAD = { top: 60, bottom: 20, left: 40, right: 40 };
 
 export default function MapView({
   pins,
@@ -75,6 +125,10 @@ export default function MapView({
   const highlightRef = useRef(highlight);
   const callbacks = useRef({});
   callbacks.current = { onSelect, onOpenPanel, onBoundsChange, onMapClick };
+  const pinsRef = useRef(pins);
+  pinsRef.current = pins;
+  const hasFitRef = useRef(false);
+
   // read at fit time, so changing them doesn't re-run the effects below
   const view = useRef({});
   view.current = { showPopup, bottomInset };
@@ -85,8 +139,10 @@ export default function MapView({
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: styleUrl || DEFAULT_STYLE_URL,
-      center: mapDefaults.center,
-      zoom: mapDefaults.zoom,
+      bounds: mapDefaults.bounds,
+      fitBoundsOptions: {
+        padding: { top: 64, bottom: 40, left: 40, right: 40 },
+      },
       minZoom: mapDefaults.minZoom,
       maxBounds: mapDefaults.maxBounds,
       maxZoom: mapDefaults.maxZoom,
@@ -96,6 +152,7 @@ export default function MapView({
       new maplibregl.NavigationControl({ showCompass: false }),
       'top-right',
     );
+    map.addControl(new FitAllControl(() => fitAll()), 'top-right');
 
     map.on('load', () => {
       map.addSource('lgu-highlight', { type: 'geojson', data: EMPTY });
@@ -128,6 +185,20 @@ export default function MapView({
       markersRef.current.clear();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fitAll = useCallback((animate = true) => {
+    const map = mapRef.current;
+    const box = resultsBBox(pinsRef.current);
+    if (!map || !box) return;
+    map.fitBounds(box, {
+      padding: {
+        ...FIT_PAD,
+        bottom: FIT_PAD.bottom + view.current.bottomInset, // keep sites above the mobile bottom sheet
+      },
+      maxZoom: 9.5,
+      duration: animate ? 800 : 0,
+    });
   }, []);
 
   // --- pins ----------------------------------------------------------------
@@ -208,6 +279,13 @@ export default function MapView({
       duration: 800,
     });
   }, [selectedId, pins]);
+
+  // --- fit to current results: first load, search/filter change, deselect ------
+  useEffect(() => {
+    if (selectedId) return; // the selected-pin effect owns the view
+    fitAll(hasFitRef.current); // first fit is instant, later ones animate
+    if (pins.length) hasFitRef.current = true;
+  }, [pins, selectedId, fitAll]);
 
   // --- highlighted city/municipality outlines ---------------------------------
   useEffect(() => {

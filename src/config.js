@@ -2,10 +2,12 @@
 export const DEFAULT_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
 
 export const mapDefaults = {
-  center: [121.774017, 12.879721], // [lng, lat] – Philippines
-  zoom: 4.8,
-  minZoom: 4,
-  // [[west, south], [east, north]] – keeps the Philippines in view, can't pan far away
+  // [[west, south], [east, north]] – extent of all FPE sites; used before pins load
+  bounds: [
+    [117, 4.5],
+    [127.5, 21],
+  ],
+  minZoom: 3, // low enough that fitBounds isn't clamped in short iframes
   maxBounds: [
     [112, 2],
     [132, 24],
